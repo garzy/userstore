@@ -10,13 +10,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * UserDTO
+ * Request for create or update an user
  */
+@ApiModel(description = "Request for create or update an user")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-05-16T18:57:52.680333500+02:00[Europe/Paris]")
-public class UserDTO   {
-  @JsonProperty("id")
-  private Long id;
-
+public class UserRequestDTO   {
   @JsonProperty("name")
   private String name;
 
@@ -24,28 +22,7 @@ public class UserDTO   {
   @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE)
   private LocalDate birthdate;
 
-  public UserDTO id(Long id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Get id
-   * @return id
-  */
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
-
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public UserDTO name(String name) {
+  public UserRequestDTO name(String name) {
     this.name = name;
     return this;
   }
@@ -57,7 +34,7 @@ public class UserDTO   {
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
-
+@Size(min=3,max=256) 
   public String getName() {
     return name;
   }
@@ -66,7 +43,7 @@ public class UserDTO   {
     this.name = name;
   }
 
-  public UserDTO birthdate(LocalDate birthdate) {
+  public UserRequestDTO birthdate(LocalDate birthdate) {
     this.birthdate = birthdate;
     return this;
   }
@@ -96,23 +73,21 @@ public class UserDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserDTO user = (UserDTO) o;
-    return Objects.equals(this.id, user.id) &&
-        Objects.equals(this.name, user.name) &&
-        Objects.equals(this.birthdate, user.birthdate);
+    UserRequestDTO userRequest = (UserRequestDTO) o;
+    return Objects.equals(this.name, userRequest.name) &&
+        Objects.equals(this.birthdate, userRequest.birthdate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, birthdate);
+    return Objects.hash(name, birthdate);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UserDTO {\n");
+    sb.append("class UserRequestDTO {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    birthdate: ").append(toIndentedString(birthdate)).append("\n");
     sb.append("}");

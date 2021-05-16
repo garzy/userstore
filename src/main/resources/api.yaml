@@ -33,7 +33,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserRequest'
       responses:
         201:
           description: Successful request. The user was successfully created.
@@ -122,7 +122,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserRequest'
       responses:
         204:
           description: Successful request (no content). The user has benn successfully modified.
@@ -151,8 +151,16 @@ components:
         birthdate:
           type: string
           format: date
-
-    Users:
-      type: array
-      items:
-        $ref: '#/components/schemas/User'
+    UserRequest:
+      description: Request for create or update an user
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 256
+        birthdate:
+          type: string
+          format: date

@@ -6,6 +6,7 @@
 package com.tangorabox.userstore.controller;
 
 import com.tangorabox.userstore.model.UserDTO;
+import com.tangorabox.userstore.model.UserRequestDTO;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +22,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-05-16T11:48:38.396175100+02:00[Europe/Paris]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-05-16T18:57:52.680333500+02:00[Europe/Paris]")
 @Validated
 @Api(value = "Users", description = "the Users API")
 public interface UsersApi {
@@ -33,7 +34,7 @@ public interface UsersApi {
     /**
      * POST /users : Create a user
      *
-     * @param userDTO  (required)
+     * @param userRequestDTO  (required)
      * @return Successful request. The user was successfully created. (status code 201)
      *         or Bad request. Some provided parameter is invalid or some required parameter is missing. An explanatory message is returned indicating the nature of the error. (status code 400)
      *         or Unauthorized. Authentication information is missing or token is invalid. (status code 401)
@@ -52,7 +53,7 @@ public interface UsersApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<UserDTO> createUser(@ApiParam(value = "" ,required=true )  @Valid @RequestBody UserDTO userDTO) {
+    default ResponseEntity<UserDTO> createUser(@ApiParam(value = "" ,required=true )  @Valid @RequestBody UserRequestDTO userRequestDTO) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
@@ -160,7 +161,7 @@ public interface UsersApi {
      * PATCH /users/{id} : Updates some info of the user
      *
      * @param id ID of the user to update (required)
-     * @param userDTO  (required)
+     * @param userRequestDTO  (required)
      * @return Successful request (no content). The user has benn successfully modified. (status code 204)
      *         or Unauthorized. Authentication information is missing or token is invalid. (status code 401)
      *         or Forbidden. You don&#39;t have permission to perform this action. Access token does not have the required scope. (status code 403)
@@ -178,7 +179,7 @@ public interface UsersApi {
         value = "/users/{id}",
         consumes = { "application/json" }
     )
-    default ResponseEntity<Void> updateUser(@ApiParam(value = "ID of the user to update",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody UserDTO userDTO) {
+    default ResponseEntity<Void> updateUser(@ApiParam(value = "ID of the user to update",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody UserRequestDTO userRequestDTO) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
