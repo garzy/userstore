@@ -41,12 +41,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+        400:
+          description: Bad request. Some provided parameter is invalid or some required parameter is missing. An explanatory message is returned indicating the nature of the error.
+        401:
+          description: Unauthorized. Authentication information is missing or token is invalid.
+        403:
+          description: Forbidden. You don't have permission to perform this action. Access token does not have the required scope.
+        500:
+          description: Internal server error. Please retry the operation a few moments later.
 
 
   /users/{id}:
@@ -64,18 +66,20 @@ paths:
             type: integer
             format: int64
       responses:
-        '200':
-          description: Expected response to a valid request
+        200:
+          description: Successful request. User information is returned
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized. Authentication information is missing or token is invalid.
+        403:
+          description: Forbidden. You don't have permission to perform this action. Access token does not have the required scope.
+        404:
+          description: Not found. No user can be found matching the given identifiers.
+        500:
+          description: Internal server error. Please retry the operation a few moments later.
     delete:
       operationId: deleteUser
       summary: Remove an existing user
@@ -92,12 +96,14 @@ paths:
       responses:
         204:
           description: Successful request (no content). The user was deleted.
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized. Authentication information is missing or token is invalid.
+        403:
+          description: Forbidden. You don't have permission to perform this action. Access token does not have the required scope.
+        404:
+          description: Not found. No user can be found matching the given identifiers.
+        500:
+          description: Internal server error. Please retry the operation a few moments later.
     patch:
       tags:
         - Users
@@ -119,13 +125,15 @@ paths:
               $ref: '#/components/schemas/User'
       responses:
         204:
-          description: Successful request (no content. The user has benn successfully modified.
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          description: Successful request (no content). The user has benn successfully modified.
+        401:
+          description: Unauthorized. Authentication information is missing or token is invalid.
+        403:
+          description: Forbidden. You don't have permission to perform this action. Access token does not have the required scope.
+        404:
+          description: Not found. No user can be found matching the given unique identifier.
+        500:
+          description: Internal server error. Please retry the operation a few moments later.
 
 components:
   schemas:
@@ -148,14 +156,3 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/User'
-    Error:
-      type: object
-      required:
-        - code
-        - message
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string

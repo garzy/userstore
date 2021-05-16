@@ -5,7 +5,6 @@
  */
 package com.tangorabox.userstore.controller;
 
-import com.tangorabox.userstore.model.ErrorDTO;
 import com.tangorabox.userstore.model.UserDTO;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
@@ -22,7 +21,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-05-16T02:03:43.863988800+02:00[Europe/Paris]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2021-05-16T11:48:38.396175100+02:00[Europe/Paris]")
 @Validated
 @Api(value = "Users", description = "the Users API")
 public interface UsersApi {
@@ -36,12 +35,18 @@ public interface UsersApi {
      *
      * @param userDTO  (required)
      * @return Successful request. The user was successfully created. (status code 201)
-     *         or unexpected error (status code 200)
+     *         or Bad request. Some provided parameter is invalid or some required parameter is missing. An explanatory message is returned indicating the nature of the error. (status code 400)
+     *         or Unauthorized. Authentication information is missing or token is invalid. (status code 401)
+     *         or Forbidden. You don&#39;t have permission to perform this action. Access token does not have the required scope. (status code 403)
+     *         or Internal server error. Please retry the operation a few moments later. (status code 500)
      */
     @ApiOperation(value = "Create a user", nickname = "createUser", notes = "", response = UserDTO.class, tags={ "Users", })
     @ApiResponses(value = { 
         @ApiResponse(code = 201, message = "Successful request. The user was successfully created.", response = UserDTO.class),
-        @ApiResponse(code = 200, message = "unexpected error", response = ErrorDTO.class) })
+        @ApiResponse(code = 400, message = "Bad request. Some provided parameter is invalid or some required parameter is missing. An explanatory message is returned indicating the nature of the error."),
+        @ApiResponse(code = 401, message = "Unauthorized. Authentication information is missing or token is invalid."),
+        @ApiResponse(code = 403, message = "Forbidden. You don't have permission to perform this action. Access token does not have the required scope."),
+        @ApiResponse(code = 500, message = "Internal server error. Please retry the operation a few moments later.") })
     @PostMapping(
         value = "/users",
         produces = { "application/json" },
@@ -67,15 +72,20 @@ public interface UsersApi {
      *
      * @param id ID of the user to delete (required)
      * @return Successful request (no content). The user was deleted. (status code 204)
-     *         or unexpected error (status code 200)
+     *         or Unauthorized. Authentication information is missing or token is invalid. (status code 401)
+     *         or Forbidden. You don&#39;t have permission to perform this action. Access token does not have the required scope. (status code 403)
+     *         or Not found. No user can be found matching the given identifiers. (status code 404)
+     *         or Internal server error. Please retry the operation a few moments later. (status code 500)
      */
     @ApiOperation(value = "Remove an existing user", nickname = "deleteUser", notes = "", tags={ "Users", })
     @ApiResponses(value = { 
         @ApiResponse(code = 204, message = "Successful request (no content). The user was deleted."),
-        @ApiResponse(code = 200, message = "unexpected error", response = ErrorDTO.class) })
+        @ApiResponse(code = 401, message = "Unauthorized. Authentication information is missing or token is invalid."),
+        @ApiResponse(code = 403, message = "Forbidden. You don't have permission to perform this action. Access token does not have the required scope."),
+        @ApiResponse(code = 404, message = "Not found. No user can be found matching the given identifiers."),
+        @ApiResponse(code = 500, message = "Internal server error. Please retry the operation a few moments later.") })
     @DeleteMapping(
-        value = "/users/{id}",
-        produces = { "application/json" }
+        value = "/users/{id}"
     )
     default ResponseEntity<Void> deleteUser(@ApiParam(value = "ID of the user to delete",required=true) @PathVariable("id") Long id) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
@@ -87,13 +97,19 @@ public interface UsersApi {
      * GET /users/{id} : Info for a specific user
      *
      * @param id ID of the user to retrieve (required)
-     * @return Expected response to a valid request (status code 200)
-     *         or unexpected error (status code 200)
+     * @return Successful request. User information is returned (status code 200)
+     *         or Unauthorized. Authentication information is missing or token is invalid. (status code 401)
+     *         or Forbidden. You don&#39;t have permission to perform this action. Access token does not have the required scope. (status code 403)
+     *         or Not found. No user can be found matching the given identifiers. (status code 404)
+     *         or Internal server error. Please retry the operation a few moments later. (status code 500)
      */
     @ApiOperation(value = "Info for a specific user", nickname = "getUsersById", notes = "", response = UserDTO.class, tags={ "Users", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Expected response to a valid request", response = UserDTO.class),
-        @ApiResponse(code = 200, message = "unexpected error", response = ErrorDTO.class) })
+        @ApiResponse(code = 200, message = "Successful request. User information is returned", response = UserDTO.class),
+        @ApiResponse(code = 401, message = "Unauthorized. Authentication information is missing or token is invalid."),
+        @ApiResponse(code = 403, message = "Forbidden. You don't have permission to perform this action. Access token does not have the required scope."),
+        @ApiResponse(code = 404, message = "Not found. No user can be found matching the given identifiers."),
+        @ApiResponse(code = 500, message = "Internal server error. Please retry the operation a few moments later.") })
     @GetMapping(
         value = "/users/{id}",
         produces = { "application/json" }
@@ -145,16 +161,21 @@ public interface UsersApi {
      *
      * @param id ID of the user to update (required)
      * @param userDTO  (required)
-     * @return Successful request (no content. The user has benn successfully modified. (status code 204)
-     *         or unexpected error (status code 200)
+     * @return Successful request (no content). The user has benn successfully modified. (status code 204)
+     *         or Unauthorized. Authentication information is missing or token is invalid. (status code 401)
+     *         or Forbidden. You don&#39;t have permission to perform this action. Access token does not have the required scope. (status code 403)
+     *         or Not found. No user can be found matching the given unique identifier. (status code 404)
+     *         or Internal server error. Please retry the operation a few moments later. (status code 500)
      */
     @ApiOperation(value = "Updates some info of the user", nickname = "updateUser", notes = "", tags={ "Users", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 204, message = "Successful request (no content. The user has benn successfully modified."),
-        @ApiResponse(code = 200, message = "unexpected error", response = ErrorDTO.class) })
+        @ApiResponse(code = 204, message = "Successful request (no content). The user has benn successfully modified."),
+        @ApiResponse(code = 401, message = "Unauthorized. Authentication information is missing or token is invalid."),
+        @ApiResponse(code = 403, message = "Forbidden. You don't have permission to perform this action. Access token does not have the required scope."),
+        @ApiResponse(code = 404, message = "Not found. No user can be found matching the given unique identifier."),
+        @ApiResponse(code = 500, message = "Internal server error. Please retry the operation a few moments later.") })
     @PatchMapping(
         value = "/users/{id}",
-        produces = { "application/json" },
         consumes = { "application/json" }
     )
     default ResponseEntity<Void> updateUser(@ApiParam(value = "ID of the user to update",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody UserDTO userDTO) {
