@@ -26,7 +26,7 @@ paths:
     post:
       tags:
         - Users
-      operationId: createUsers
+      operationId: createUser
       summary: Create a user
       requestBody:
         required: true
