@@ -17,7 +17,7 @@
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <springfox-version>2.9.0</springfox-version>
+        <springfox-version>2.9.2</springfox-version>
         <openapi-generator-version>5.1.0</openapi-generator-version>
         <default.package>com.tangorabox.userstore</default.package>
     </properties>
